@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QProcess>
+#include <QMessageBox>
 #include "game.h"
 
 //"Creates" classes to be used by MainWidget class (only holds pointers)
@@ -30,6 +31,9 @@ class MainWidget : public QWidget {
 		QPushButton* bottomLeftButton;
 		QPushButton* bottomMiddleButton;
 		QPushButton* bottomRightButton;
+		//Dialog
+		QMessageBox* dialogBox;
+		QPushButton* dialogButton;
 		//Process
 		QProcess process_;
 		//Other functions and fields

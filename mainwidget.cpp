@@ -15,6 +15,12 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent) {
 	bottomLeftButton = new QPushButton();
 	bottomMiddleButton = new QPushButton();
 	bottomRightButton = new QPushButton();
+
+	//Dialog box
+	dialogBox = new QMessageBox();
+	dialogButton = new QPushButton();
+	dialogButton->setText("Play Again?");
+	dialogBox->addButton(dialogButton, QMessageBox::AcceptRole);
 	
 	//Creates an array for the buttons
 	QPushButton* buttons[9];
@@ -85,6 +91,8 @@ MainWidget::~MainWidget() {
 	delete bottomLeftButton;
 	delete bottomMiddleButton;
 	delete bottomRightButton;
+	delete dialogBox;
+	delete dialogButton;
 }
 
 //Handlers for button press
@@ -136,4 +144,17 @@ void MainWidget::updateScreen() {
 	bottomLeftButton->setText(QString::fromStdString(std::string(1, game->getPlayerMarkerAt(2, 0))));
 	bottomMiddleButton->setText(QString::fromStdString(std::string(1, game->getPlayerMarkerAt(2, 1))));
 	bottomRightButton->setText(QString::fromStdString(std::string(1, game->getPlayerMarkerAt(2, 2))));
+	if (game->checkForWin(game->getPlayer1Marker())) {
+		dialogBox->setVisible(true);
+		dialogBox->setText(QString::fromStdString(std::string("Player 1 Has Won!")));
+	}
+	else if (game->checkForWin(game->getPlayer2Marker())) {
+		dialogBox->setVisible(true);
+		dialogBox->setText(QString::fromStdString(std::string("Player 2 Has Won!")));
+	}
+	else if (game->checkForTie()) {
+		dialogBox->setVisible(true);
+		dialogBox->setText(QString::fromStdString(std::string("Game Is A Tie!")));
+	}
+
 }

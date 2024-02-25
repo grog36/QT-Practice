@@ -8,6 +8,7 @@ int main(int argc, char* argv[]) {
 	//This is our MainWidget class containing our GUI and functionality
 	MainWidget w;
 	w.show(); // Show main window
+	w.setStyleSheet("background-color: teal;");
 	
 	//Run the application and return execs() return value/code
 	return a.exec();
