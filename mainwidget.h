@@ -50,6 +50,7 @@ class MainWidget : public QWidget {
 		void pressBottomLeftButton();
 		void pressBottomMiddleButton();
 		void pressBottomRightButton();
+		void playAgain();
 };
 
 #endif // MAINWIDGET_H

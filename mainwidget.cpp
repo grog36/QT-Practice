@@ -21,6 +21,7 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent) {
 	dialogButton = new QPushButton();
 	dialogButton->setText("Play Again?");
 	dialogBox->addButton(dialogButton, QMessageBox::AcceptRole);
+	connect(dialogButton, SIGNAL(pressed()), this, SLOT(playAgain()));
 	
 	//Creates an array for the buttons
 	QPushButton* buttons[9];
@@ -157,4 +158,9 @@ void MainWidget::updateScreen() {
 		dialogBox->setText(QString::fromStdString(std::string("Game Is A Tie!")));
 	}
 
+}
+
+void MainWidget::playAgain() {
+	game = new Game(1);
+	updateScreen();
 }
