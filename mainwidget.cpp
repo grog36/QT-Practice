@@ -1,5 +1,6 @@
 #include <QtWidgets>
 #include <string>
+#include <iostream>
 #include "mainwidget.h"
 
 //Constructor for main widget
@@ -37,7 +38,8 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent) {
 
 	//Changes the styles of the buttons
 	for (int i = 0; i < 9; i++) {
-		buttons[i]->setStyleSheet("background-color: white; color: black");
+		buttons[i]->setStyleSheet("background-color: white; color: black;");
+		buttons[i]->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
 	}
 
 	//Lays them out
