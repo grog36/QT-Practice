@@ -21,7 +21,6 @@ class MainWidget : public QWidget {
 		~MainWidget(); //Destructor;
 	private:
 		//Buttons
-		QPushButton** buttons;
 		QPushButton* topLeftButton;
 		QPushButton* topMiddleButton;
 		QPushButton* topRightButton;
@@ -33,7 +32,6 @@ class MainWidget : public QWidget {
 		QPushButton* bottomRightButton;
 		//Dialog
 		QMessageBox* dialogBox;
-		QPushButton* dialogButton;
 		//Process
 		QProcess process_;
 		//Other functions and fields

@@ -19,7 +19,7 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent) {
 
 	//Dialog box
 	dialogBox = new QMessageBox();
-	dialogButton = new QPushButton();
+	QPushButton* dialogButton = new QPushButton();
 	dialogButton->setText("Play Again?");
 	dialogBox->addButton(dialogButton, QMessageBox::AcceptRole);
 	connect(dialogButton, SIGNAL(pressed()), this, SLOT(playAgain()));
@@ -38,7 +38,7 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent) {
 
 	//Changes the styles of the buttons
 	for (int i = 0; i < 9; i++) {
-		buttons[i]->setStyleSheet("background-color: white; color: black;");
+		buttons[i]->setStyleSheet("background-color: white; color: black; font-size: 45px;");
 		buttons[i]->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
 	}
 
@@ -84,7 +84,6 @@ MainWidget::MainWidget(QWidget* parent) : QWidget(parent) {
 
 //Destructor
 MainWidget::~MainWidget() {
-	delete buttons;
 	delete topLeftButton;
 	delete topMiddleButton;
 	delete topRightButton;
@@ -95,7 +94,6 @@ MainWidget::~MainWidget() {
 	delete bottomMiddleButton;
 	delete bottomRightButton;
 	delete dialogBox;
-	delete dialogButton;
 }
 
 //Handlers for button press
