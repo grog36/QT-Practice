@@ -16,10 +16,8 @@ class Coordinate {
         * @param colIn (int) - The column index for the coordinate
         */
         Coordinate(int rowIn, int colIn) {
-            if (rowIn >= 0 && rowIn < 3 && colIn >= 0 && colIn < 3) {
-                columnIndex = colIn;
-                rowIndex = rowIn;
-            }
+            rowIndex = rowIn;
+            columnIndex = colIn;
         }
 
         /**

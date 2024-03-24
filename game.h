@@ -1,6 +1,7 @@
 //The tic tac toe game class
 #include "coordinate.h"
 #include <vector>
+#include <iostream>
 
 class Game {
     private:
@@ -8,9 +9,7 @@ class Game {
         std::vector<std::vector<char>> grid;
 
         //A grid of coordinates corresponding to the empty spaces in "grid"
-        std::vector<Coordinate> emptySpaces = {Coordinate(0, 0), Coordinate(1, 0), Coordinate(2, 0),
-            Coordinate(0, 1), Coordinate(1, 1), Coordinate(2, 1),
-            Coordinate(0, 2), Coordinate(1, 2), Coordinate(2, 2)};
+        std::vector<Coordinate> emptySpaces;
         
         //Player 1 Marker
         char player1Marker = 'X';
@@ -36,9 +35,40 @@ class Game {
                     row.push_back(' ');
                     row.push_back(' ');
                     grid.push_back(row);
+                    for (int j = 0; j < 3; j++) {
+                        emptySpaces.push_back(Coordinate(i, j));
+                    }
                 }
                 whoseTurn = ((whoGoesFirst == 1) ? 'X' : 'O');
             }
+        }
+
+        /**
+        * 1-Parameter Constructor
+        *
+        * @param prevGame (Game*) - A pointer to the old game board to copy over
+        */
+        Game(
+            std::vector<std::vector<char>> oldGrid,
+            std::vector<Coordinate> oldEmptySpaces,
+            char oldPlayer1Marker,
+            char oldPlayer2Marker,
+            char oldWhoseTurn
+            ) {
+                for (int i = 0; i < 3; i++) {
+                    std::vector<char> row;
+                    for (int j = 0; j < 3; j++) {
+                        row.push_back(oldGrid[i][j]);
+                    }
+                    grid.push_back(row);
+                }
+                for (unsigned int i = 0; i < oldEmptySpaces.size(); i++) {
+                    Coordinate c = oldEmptySpaces.at(i);
+                    emptySpaces.push_back(Coordinate(c.getRowIndex(), c.getColumnIndex()));
+                }
+                player1Marker = oldPlayer1Marker;
+                player2Marker = oldPlayer2Marker;
+                whoseTurn = oldWhoseTurn;
         }
 
         /**
@@ -177,9 +207,66 @@ class Game {
         * @return char - The character at a given (row/column) in "grid"
         */
         char getPlayerMarkerAt(int rowIndex, int colIndex) {
-            if (rowIndex >= 0 && rowIndex <= 3 && colIndex >= 0 && colIndex <= 3) {
+            if (rowIndex >= 0 && rowIndex < 3 && colIndex >= 0 && colIndex < 3) {
                 return grid[rowIndex][colIndex];
             }
             return ' ';
+        }
+
+        /**
+        * Finds the best move for a given game state
+        *
+        * @return Coordinate - Returns the best coordinate to play in the position
+        */
+        Coordinate findBestMove() {
+            char enemyMarker = (whoseTurn == player1Marker) ? player2Marker : player1Marker;
+            bool player1Win = checkForWin(player1Marker);
+            bool player2Win = checkForWin(player2Marker);
+            bool tie = checkForTie();
+            bool gameIsStillGoingOn = !(player1Win || player2Win || tie);
+            if (gameIsStillGoingOn) {
+                //Checks to see if a move wins the game
+                for (unsigned int i = 0; i < emptySpaces.size(); i++) {
+                    Coordinate c = emptySpaces.at(i);
+                    Game tempGame = Game(grid, emptySpaces, player1Marker, player2Marker, whoseTurn);
+                    tempGame.playMove(c.getRowIndex(), c.getColumnIndex());
+                    if (tempGame.checkForWin(whoseTurn)) {
+                        return c;
+                    }
+                }
+                //Checks to see if move prevents a loss
+                for (unsigned int i = 0; i < emptySpaces.size(); i++) {
+                    Coordinate c = emptySpaces.at(i);
+                    Game tempGame = Game(grid, emptySpaces, player1Marker, player2Marker, enemyMarker);
+                    tempGame.playMove(c.getRowIndex(), c.getColumnIndex());
+                    if (tempGame.checkForWin(enemyMarker)) {
+                        return c;
+                    }
+                }
+                return emptySpaces.at(0);
+            }
+            return Coordinate(100, 100);
+        }
+
+        /**
+        * Allows the bot to play a move
+        *
+        * The bot can only move if there is a valid move in the position
+        * and uses whichever marker "whoseTurn" is currently set at
+        */
+        void botPlaysMove() {
+            Coordinate bestMove = findBestMove();
+            if (bestMove.getRowIndex() != 100) {
+                playMove(bestMove.getRowIndex(), bestMove.getColumnIndex());
+            }
+        }
+
+        /**
+        * Checks to see if the current game session is in a game-over state
+        *
+        * @return bool - Returns true if a player has won or there is a tie, false otherwise
+        */
+        bool isGameOver() {
+            return (emptySpaces.size() == 0);
         }
 };

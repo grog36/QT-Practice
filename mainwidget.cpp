@@ -100,38 +100,74 @@ MainWidget::~MainWidget() {
 void MainWidget::pressTopLeftButton() {
 	game->playMove(0, 0);
 	updateScreen();
+	if (!(game->isGameOver())) {
+		game->botPlaysMove();
+		updateScreen();
+	}
 }
 void MainWidget::pressTopMiddleButton() {
 	game->playMove(0, 1);
 	updateScreen();
+	if (!(game->isGameOver())) {
+		game->botPlaysMove();
+		updateScreen();
+	}
 }
 void MainWidget::pressTopRightButton() {
 	game->playMove(0, 2);
 	updateScreen();
+	if (!(game->isGameOver())) {
+		game->botPlaysMove();
+		updateScreen();
+	}
 }
 void MainWidget::pressMiddleLeftButton() {
 	game->playMove(1, 0);
 	updateScreen();
+	if (!(game->isGameOver())) {
+		game->botPlaysMove();
+		updateScreen();
+	}
 }
 void MainWidget::pressCenterButton() {
 	game->playMove(1, 1);
 	updateScreen();
+	if (!(game->isGameOver())) {
+		game->botPlaysMove();
+		updateScreen();
+	}
 }
 void MainWidget::pressMiddleRightButton() {
 	game->playMove(1, 2);
 	updateScreen();
+	if (!(game->isGameOver())) {
+		game->botPlaysMove();
+		updateScreen();
+	}
 }
 void MainWidget::pressBottomLeftButton() {
 	game->playMove(2, 0);
 	updateScreen();
+	if (!(game->isGameOver())) {
+		game->botPlaysMove();
+		updateScreen();
+	}
 }
 void MainWidget::pressBottomMiddleButton() {
 	game->playMove(2, 1);
 	updateScreen();
+	if (!(game->isGameOver())) {
+		game->botPlaysMove();
+		updateScreen();
+	}
 }
 void MainWidget::pressBottomRightButton() {
 	game->playMove(2, 2);
 	updateScreen();
+	if (!(game->isGameOver())) {
+		game->botPlaysMove();
+		updateScreen();
+	}
 }
 
 //Updates the screen for the given board position
@@ -157,7 +193,6 @@ void MainWidget::updateScreen() {
 		dialogBox->setVisible(true);
 		dialogBox->setText(QString::fromStdString(std::string("Game Is A Tie!")));
 	}
-
 }
 
 void MainWidget::playAgain() {
